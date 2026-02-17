@@ -90,6 +90,7 @@ button:hover {
     border-left: 4px solid #bb86fc;
     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
     transition: transform 0.2s;
+    position: relative;
 }
 
 .task-card:hover {
@@ -107,4 +108,26 @@ button:hover {
     margin: 0;
     font-size: 0.85rem;
     color: #b0b0b0;
+}
+
+.delete-btn {
+    background-color: #cf6679;
+    color: white;
+    font-size: 0.7rem;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    border: none;
+    display: none; 
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.task-card:hover .delete-btn {
+    display: block;
+}
+
+.delete-btn:hover {
+    background-color: #ff4444;
 }

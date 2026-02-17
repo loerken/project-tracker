@@ -23,9 +23,22 @@ function renderTask(task) {
     card.innerHTML = `
         <h3>${task.title}</h3>
         <p>${task.description || ''}</p>
+        <button class="delete-btn" onclick="deleteTask(${task.id})">Delete</button>
     `;
     
     column.appendChild(card);
+}
+
+async function deleteTask(id) {
+    if (!confirm("Are you sure you want to delete this task?")) return;
+
+    const response = await fetch(`/api/tasks/${id}`, {
+        method: 'DELETE'
+    });
+
+    if (response.ok) {
+        fetchTasks();
+    }
 }
 
 addTaskBtn.addEventListener('click', async () => {

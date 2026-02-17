@@ -55,6 +55,19 @@ app.post('/api/tasks', (req, res) => {
     });
 });
 
+app.delete('/api/tasks/:id', (req, res) => {
+    const sql = 'DELETE FROM tasks WHERE id = ?';
+    const params = [req.params.id];
+
+    db.run(sql, params, function (err) {
+        if (err) {
+            res.status(400).json({ "error": err.message });
+            return;
+        }
+        res.json({ "message": "deleted", "changes": this.changes });
+    });
+});
+
 app.listen(port, () => {
     console.log(`Server running on the following address: http://localhost:${port}`);
 });
