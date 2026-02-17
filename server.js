@@ -27,6 +27,34 @@ app.get('/api/tasks', (req, res) => {
     });
 });
 
+app.post('/api/tasks', (req, res) => {
+    const { title, description } = req.body;
+    
+    if (!title) {
+        res.status(400).json({ "error": "Title is mandatory!" });
+        return;
+    }
+
+    const sql = 'INSERT INTO tasks (title, description) VALUES (?,?)';
+    const params = [title, description];
+
+    db.run(sql, params, function (err) {
+        if (err) {
+            res.status(400).json({ "error": err.message });
+            return;
+        }
+        res.json({
+            "message": "success",
+            "data": {
+                "id": this.lastID,
+                "title": title,
+                "description": description,
+                "status": "todo"
+            }
+        });
+    });
+});
+
 app.listen(port, () => {
     console.log(`Server running on the following address: http://localhost:${port}`);
 });
