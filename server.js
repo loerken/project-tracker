@@ -68,6 +68,23 @@ app.delete('/api/tasks/:id', (req, res) => {
     });
 });
 
+app.put('/api/tasks/:id', (req, res) => {
+    const { status } = req.body;
+    const sql = 'UPDATE tasks SET status = ? WHERE id = ?';
+    const params = [status, req.params.id];
+
+    db.run(sql, params, function (err) {
+        if (err) {
+            res.status(400).json({ "error": err.message });
+            return;
+        }
+        res.json({
+            message: "success",
+            data: { id: req.params.id, status: status }
+        });
+    });
+});
+
 app.listen(port, () => {
     console.log(`Server running on the following address: http://localhost:${port}`);
 });
