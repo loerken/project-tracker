@@ -208,3 +208,7 @@ h1 {
 .close-btn:hover {
     color: white;
 }
+
+.column h2 span {
+    color: #888;
+}

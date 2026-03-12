@@ -43,9 +43,26 @@ async function fetchTasks() {
     const response = await fetch('/api/tasks');
     const result = await response.json();
     
+    const tasks = result.data;
+    
+    const counts = {
+        todo: 0,
+        doing: 0,
+        done: 0
+    };
+
     document.querySelectorAll('.task-list').forEach(list => list.innerHTML = '');
     
-    result.data.forEach(task => renderTask(task));
+    tasks.forEach(task => {
+        renderTask(task);
+        if (counts.hasOwnProperty(task.status)) {
+            counts[task.status]++;
+        }
+    });
+
+    document.getElementById('todo-count').innerText = `(${counts.todo})`;
+    document.getElementById('doing-count').innerText = `(${counts.doing})`;
+    document.getElementById('done-count').innerText = `(${counts.done})`;
 }
 
 function renderTask(task) {
